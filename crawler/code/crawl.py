@@ -69,6 +69,8 @@ def main():
 
     levels = [logging.ERROR, logging.WARN, logging.INFO, logging.DEBUG]
     logging.basicConfig(level=levels[min(args.level, len(levels)-1)])
+    #  Does basic configuration for the logging system
+    #  by creating a StreamHandler with a default Formatter and adding it to the root logger
 
     if args.iocp:
         from asyncio.windows_events import ProactorEventLoop

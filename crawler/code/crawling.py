@@ -97,6 +97,11 @@ class Crawler:
             return True
         if re.match(r'\A[\d\.]*\Z', host):
             return False
+        # if host in self.root_domains:
+        #     if re.match(r'\A[\d\.]*\Z', host):
+        #         return False
+        #     else:
+        #         return True
         if self.strict:
             return self._host_okay_strictish(host)
         else:
@@ -147,13 +152,13 @@ class Crawler:
                     LOGGER.info('got %r distinct urls from %r',
                                 len(urls), response.url)
                 for url in urls:
-                    normalized = urllib.parse.urljoin(response.url, url)
+                    normalized = urllib.parse.urljoin(str(response.url), url)
                     defragmented, frag = urllib.parse.urldefrag(normalized)
                     if self.url_allowed(defragmented):
                         links.add(defragmented)
 
         stat = FetchStatistic(
-            url=response.url,
+            url=str(response.url),
             next_url=None,
             status=response.status,
             exception=None,
